@@ -48,6 +48,8 @@ class AuthController extends Controller
     public function me()
     {
         //return response()->json($this->AuthenticatedUser);
+        $this->AuthenticatedUser->status = rand(5, 15);
+        $this->AuthenticatedUser->save();
         return response()->json($this->guard()->user());
     }
 
