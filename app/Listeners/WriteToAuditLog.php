@@ -53,6 +53,14 @@ class WriteToAuditLog
        }
     }
 
+    /**
+     * Save a audit record to the AuditLog model of the updated field
+     *
+     * @method SaveAuditRecord
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $field
+     * @return void
+     */
     protected function SaveAuditRecord(\Illuminate\Database\Eloquent\Model $model, string $field)
     {
         $auditLog = new AuditLog;
