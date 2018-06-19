@@ -10,6 +10,15 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => \App\Events\RecordSaved::class,
+    ];
+
    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
