@@ -6,7 +6,5 @@ A template Laravel installations setup with the following:
 
 
 
-laravel setup with jwt authorisation
-
 http://jwt-auth.readthedocs.io/en/develop/
 https://laravel.com/api/5.6/index.html
