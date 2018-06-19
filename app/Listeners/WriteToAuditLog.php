@@ -28,24 +28,29 @@ class WriteToAuditLog
      */
     public function handle(RecordSaved $recordSaved)
     {
-       if (!$recordSaved->event->isDirty()) {
-           return;
-       }
-
-       $updatedFields = $recordSaved->event->getDirty();
-
-       $ignoreFields = ['id', 'password', 'updated_at', 'created_at'];
-
-       foreach($updatedFields as $key => $value)
-       {
-            if (in_array($key, $ignoreFields)) {
-                continue;
+       try {
+            if (!$recordSaved->event->isDirty()) {
+                return;
             }
 
-            $this->SaveAuditRecord($recordSaved->event, $key);
-       }
+            $updatedFields = $recordSaved->event->getDirty();
 
-       return;
+            $ignoreFields = ['id', 'password', 'updated_at', 'created_at'];
+
+            foreach($updatedFields as $key => $value)
+            {
+                if (in_array($key, $ignoreFields)) {
+                    continue;
+                }
+
+                $this->SaveAuditRecord($recordSaved->event, $key);
+            }
+
+            return;
+       } catch (Exception $e) {
+            Log::warning($e->getMessage());
+            return;
+       }
     }
 
     protected function SaveAuditRecord(\Illuminate\Database\Eloquent\Model $model, string $field)
