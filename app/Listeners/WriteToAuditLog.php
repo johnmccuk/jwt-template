@@ -6,7 +6,7 @@ use App\Events\RecordSaved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
-use App\AuditLogs;
+use App\AuditLog;
 
 class WriteToAuditLog
 {
@@ -50,8 +50,9 @@ class WriteToAuditLog
 
     protected function SaveAuditRecord(\Illuminate\Database\Eloquent\Model $model, string $field)
     {
-        $auditLog = new AuditLogs;
-        $auditLog->table = get_class($model);
+        $auditLog = new AuditLog;
+        $auditLog->auditable_type = get_class($model);
+        $auditLog->auditable_id = $model->id;
         $auditLog->field = $field;
         $auditLog->before = $model->getOriginal($field);
         $auditLog->after = $model->$field;

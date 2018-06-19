@@ -16,11 +16,15 @@ class CreateAuditLogs extends Migration
         Schema::create('audit_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('model', 50);
+            $table->unsignedInteger('auditable_id');
+            $table->string('auditable_type');
             $table->string('field', 50);
             $table->string('before');
             $table->string('after');
             $table->unsignedInteger('user_id');
+
+            $table->index('auditable_id');
+            $table->index('auditable_type');
         });
     }
 

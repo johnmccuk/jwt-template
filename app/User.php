@@ -61,4 +61,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany('App\Term');
     }
+
+    public function audit_logs()
+    {
+        return $this->morphMany('App\AuditLog', 'auditable');
+    }
 }
